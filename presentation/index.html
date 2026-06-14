@@ -601,13 +601,7 @@
                                         <p>Random Forest outperforms Linear, Polynomial, AdaBoost, and XGBoost models.</p>
                                     </div>
                                 </li>
-                                <li>
-                                    <span class="check-box checked">&check;</span>
-                                    <div>
-                                        <strong>Seamless API Deployment:</strong>
-                                        <p>Lightweight Flask app hosts the 1.04 GB joblib pipeline for sub-second REST API response times.</p>
-                                    </div>
-                                </li>
+
                             </ul>
                             
                             <div class="final-thank-you">
@@ -615,9 +609,6 @@
                                     <div class="thank-you-text">
                                         <h4>Thank you!</h4>
                                         <p>Feel free to query the models or test the live website.</p>
-                                        <button class="btn btn-secondary" onclick="app.jumpToSlide(0)">
-                                            Restart Presentation
-                                        </button>
                                     </div>
                                     <div class="qr-code-box">
                                         <img src="repo-link-qr.png" alt="Repository QR Code" class="qr-image">
@@ -654,10 +645,12 @@
             </div>
 
             <div class="footer-right">
-                <button id="btn-autoplay" class="control-btn-secondary" title="Play/Pause Slide Autoplay">
+                <button id="btn-restart" class="control-btn" onclick="app.jumpToSlide(0)" title="Restart Presentation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                </button>
+                <button id="btn-autoplay" class="control-btn" title="Play/Pause Slide Autoplay">
                     <svg class="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     <svg class="pause-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                    <span class="autoplay-txt">Play</span>
                 </button>
             </div>
         </footer>

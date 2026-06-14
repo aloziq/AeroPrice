@@ -211,7 +211,8 @@ class PresentationApp {
         const btn = document.getElementById('btn-autoplay');
         btn.querySelector('.play-icon').classList.add('hidden');
         btn.querySelector('.pause-icon').classList.remove('hidden');
-        btn.querySelector('.autoplay-txt').innerText = "Pause";
+        const txtEl = btn.querySelector('.autoplay-txt');
+        if (txtEl) txtEl.innerText = "Pause";
         btn.style.borderColor = "var(--color-primary)";
         btn.style.color = "var(--color-primary)";
 
@@ -228,7 +229,8 @@ class PresentationApp {
         const btn = document.getElementById('btn-autoplay');
         btn.querySelector('.play-icon').classList.remove('hidden');
         btn.querySelector('.pause-icon').classList.add('hidden');
-        btn.querySelector('.autoplay-txt').innerText = "Play";
+        const txtEl = btn.querySelector('.autoplay-txt');
+        if (txtEl) txtEl.innerText = "Play";
         btn.style.borderColor = "var(--glass-border)";
         btn.style.color = "var(--text-secondary)";
 
