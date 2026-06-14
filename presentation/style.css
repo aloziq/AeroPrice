@@ -1437,6 +1437,55 @@ html, body {
     }
 }
 
+/* QR Code & Closing Slide Styles */
+.thank-you-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 30px;
+    text-align: left;
+}
+
+.thank-you-text {
+    flex: 1;
+}
+
+.qr-code-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.qr-code-box:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: var(--color-primary);
+}
+
+.qr-image {
+    width: 110px;
+    height: 110px;
+    border-radius: var(--border-radius-sm);
+    display: block;
+    background: #ffffff; /* White background to guarantee high contrast for scans */
+    padding: 8px;
+}
+
+.qr-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.8px;
+}
+
 /* ==========================================================================
    RESPONSIVENESS
    ========================================================================== */
@@ -1471,5 +1520,11 @@ html, body {
         flex-basis: auto;
         width: 100%;
         max-width: 320px;
+    }
+    .thank-you-flex {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
     }
 }
