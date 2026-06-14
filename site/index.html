@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroPrice AI | Smart Flight Fare Prediction</title>
+    <meta name="description" content="Predict domestic flight prices in India using our advanced machine learning model. Calculate rates instantly based on airlines, route, class, and booking window.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="currentColor"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>AeroPrice <span class="accent-text">AI</span></h1>
+                    <p class="tagline">Indian Flights Predictive Engine</p>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Switcher -->
+            <div class="tab-navigation">
+                <button class="nav-tab active" data-tab="predictor" id="tab-pred-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                    <span>Fare Predictor</span>
+                </button>
+                <button class="nav-tab" data-tab="creator" id="tab-create-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="12" y1="18" x2="12" y2="12"/>
+                        <line x1="9" y1="15" x2="15" y2="15"/>
+                    </svg>
+                    <span>Flight Creator</span>
+                </button>
+            </div>
+
+            <div class="system-status">
+                <span class="status-indicator online"></span>
+                <span class="status-label">Model Loaded: Random Forest</span>
+            </div>
+        </header>
+
+        <!-- Main Workspace: PREDICTOR TAB -->
+        <main class="dashboard-grid tab-content active" id="predictor-tab-content">
+            
+            <!-- Left Side: Flight Configuration Form -->
+            <section class="config-panel card">
+                <div class="card-header">
+                    <h2>Configure Your Flight</h2>
+                    <p>Enter details to estimate the optimal ticket price</p>
+                </div>
+                
+                <form id="prediction-form" onsubmit="return false;">
+                    
+                    <!-- Route Selection -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label for="source_city">Source City</label>
+                            <div class="select-wrapper">
+                                <select id="source_city" required>
+                                    <option value="Delhi" selected>Delhi (DEL)</option>
+                                    <option value="Mumbai">Mumbai (BOM)</option>
+                                    <option value="Bangalore">Bangalore (BLR)</option>
+                                    <option value="Kolkata">Kolkata (CCU)</option>
+                                    <option value="Hyderabad">Hyderabad (HYD)</option>
+                                    <option value="Chennai">Chennai (MAA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="swap-btn-container">
+                            <button type="button" id="swap-route-btn" aria-label="Swap source and destination" class="swap-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 4L21 8M21 8L17 12M21 8H3M7 20L3 16M3 16L7 12M3 16H21"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="destination_city">Destination City</label>
+                            <div class="select-wrapper">
+                                <select id="destination_city" required>
+                                    <option value="Mumbai" selected>Mumbai (BOM)</option>
+                                    <option value="Delhi">Delhi (DEL)</option>
+                                    <option value="Bangalore">Bangalore (BLR)</option>
+                                    <option value="Kolkata">Kolkata (CCU)</option>
+                                    <option value="Hyderabad">Hyderabad (HYD)</option>
+                                    <option value="Chennai">Chennai (MAA)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Airline Select (Compact Row layout) -->
+                    <div class="form-group">
+                        <label>Select Airline</label>
+                        <div class="airline-grid">
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="Air_India" checked>
+                                <div class="airline-content">
+                                    <div class="airline-logo ai-logo">AI</div>
+                                    <span>Air India</span>
+                                </div>
+                            </label>
+                            
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="Vistara">
+                                <div class="airline-content">
+                                    <div class="airline-logo vi-logo">VI</div>
+                                    <span>Vistara</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="Indigo">
+                                <div class="airline-content">
+                                    <div class="airline-logo in-logo">6E</div>
+                                    <span>IndiGo</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="SpiceJet">
+                                <div class="airline-content">
+                                    <div class="airline-logo sj-logo">SG</div>
+                                    <span>SpiceJet</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="GO_FIRST">
+                                <div class="airline-content">
+                                    <div class="airline-logo go-logo">G8</div>
+                                    <span>Go First</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="airline" value="AirAsia">
+                                <div class="airline-content">
+                                    <div class="airline-logo aa-logo">I5</div>
+                                    <span>AirAsia</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Travel Class & Stops -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label>Travel Class</label>
+                            <div class="segmented-control">
+                                <label class="segment-option">
+                                    <input type="radio" name="class" value="Economy" checked>
+                                    <span>Economy</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="class" value="Business">
+                                    <span>Business</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Flight Stops</label>
+                            <div class="segmented-control">
+                                <label class="segment-option">
+                                    <input type="radio" name="stops" value="zero" checked>
+                                    <span>Direct</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="stops" value="one">
+                                    <span>1 Stop</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="stops" value="two_or_more">
+                                    <span>2+ Stops</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Departure & Arrival Times -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label for="departure_time">Departure Period</label>
+                            <div class="select-wrapper">
+                                <select id="departure_time" required>
+                                    <option value="Early_Morning">Early Morning (4AM - 8AM)</option>
+                                    <option value="Morning" selected>Morning (8AM - 12PM)</option>
+                                    <option value="Afternoon">Afternoon (12PM - 4PM)</option>
+                                    <option value="Evening">Evening (4PM - 8PM)</option>
+                                    <option value="Night">Night (8PM - 12AM)</option>
+                                    <option value="Late_Night">Late Night (12AM - 4AM)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="arrival_time">Arrival Period</label>
+                            <div class="select-wrapper">
+                                <select id="arrival_time" required>
+                                    <option value="Early_Morning">Early Morning (4AM - 8AM)</option>
+                                    <option value="Morning">Morning (8AM - 12PM)</option>
+                                    <option value="Afternoon">Afternoon (12PM - 4PM)</option>
+                                    <option value="Evening" selected>Evening (4PM - 8PM)</option>
+                                    <option value="Night">Night (8PM - 12AM)</option>
+                                    <option value="Late_Night">Late Night (12AM - 4AM)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sliders in a split row for height efficiency -->
+                    <div class="form-row split-row">
+                        <div class="form-group slider-group">
+                            <div class="slider-header">
+                                <label for="days_left">Days Left to Flight</label>
+                                <span class="slider-val-badge" id="days_left_badge">15 Days</span>
+                            </div>
+                            <input type="range" id="days_left" name="days_left" min="1" max="50" value="15" class="custom-slider">
+                            <div class="slider-labels">
+                                <span>1d (Critical)</span>
+                                <span>50d (Optimal)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group slider-group">
+                            <div class="slider-header">
+                                <label for="duration">Flight Duration</label>
+                                <span class="slider-val-badge" id="duration_badge">2.5 hours</span>
+                            </div>
+                            <input type="range" id="duration" name="duration" min="0.5" max="30" step="0.5" value="2.5" class="custom-slider">
+                            <div class="slider-labels">
+                                <span>30m (Short)</span>
+                                <span>30h (Long)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="predict-btn" class="submit-btn">
+                        <span>Analyze & Predict Fare</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Side: Live Prediction Output & Insights -->
+            <section class="results-panel card">
+                
+                <!-- State 1: Initial Empty State -->
+                <div id="results-empty" class="panel-state active">
+                    <div class="empty-state-content">
+                        <div class="pulse-icon-container">
+                            <svg class="radar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" stroke-dasharray="3 3"/>
+                                <path d="M12 2a10 10 0 1 0 10 10" stroke-dasharray="0"/>
+                                <line x1="12" y1="12" x2="22" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3>Ready for Analysis</h3>
+                        <p>Adjust parameters and click <strong>Predict Fare</strong>. AeroPrice AI will evaluate the data against the Random Forest pipeline.</p>
+                    </div>
+                </div>
+
+                <!-- State 2: Loading State -->
+                <div id="results-loading" class="panel-state">
+                    <div class="loader-content">
+                        <div class="custom-spinner"></div>
+                        <h3 id="loader-status">Computing feature mappings...</h3>
+                        <p>Engineering variables & calling pipeline regressor</p>
+                        <div class="loading-bar-container">
+                            <div class="loading-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State 3: Prediction Results State -->
+                <div id="results-success" class="panel-state">
+                    <div class="success-content">
+                        <div class="badge-row">
+                            <span class="category-badge" id="res-class">Economy</span>
+                            <span class="category-badge" id="res-airline">Air India</span>
+                        </div>
+
+                        <!-- Flight Route Graphic -->
+                        <div class="route-graphic">
+                            <div class="route-station">
+                                <span class="airport-code" id="res-src-code">DEL</span>
+                                <span class="airport-city" id="res-src-name">Delhi</span>
+                            </div>
+                            <div class="flight-path">
+                                <div class="flight-line"></div>
+                                <svg class="airplane-svg" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z"/>
+                                </svg>
+                            </div>
+                            <div class="route-station text-right">
+                                <span class="airport-code" id="res-dst-code">BOM</span>
+                                <span class="airport-city" id="res-dst-name">Mumbai</span>
+                            </div>
+                        </div>
+
+                        <!-- Price display -->
+                        <div class="price-display-container">
+                            <p class="predicted-label">Estimated Fare</p>
+                            <div class="price-row">
+                                <span class="currency-symbol">₹</span>
+                                <span class="price-amount" id="predicted-price">0</span>
+                            </div>
+                            <div class="deal-tag-container">
+                                <span class="deal-tag" id="deal-rating">Fair Price</span>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Specs list -->
+                        <div class="spec-grid">
+                            <div class="spec-item">
+                                <span class="spec-label">Duration</span>
+                                <span class="spec-value" id="res-duration">2h 30m</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Stops</span>
+                                <span class="spec-value" id="res-stops">Direct</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Booking Window</span>
+                                <span class="spec-value" id="res-booking-window">Saver (15 days)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Time Shift</span>
+                                <span class="spec-value" id="res-time-shift">+1 index</span>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Chart -->
+                        <div class="chart-container">
+                            <h4 class="chart-title">Dynamic Price Trend (Days Left vs Fare)</h4>
+                            <p class="chart-subtitle">Calculated simulation across booking windows</p>
+                            <div class="chart-canvas-wrapper">
+                                <canvas id="price-trend-chart" width="400" height="120"></canvas>
+                            </div>
+                            <div class="chart-legend">
+                                <span class="legend-dot current"></span> Selected Window
+                                <span class="legend-dot path"></span> Trend curve
+                            </div>
+                        </div>
+
+                        <!-- Recommendations / Advice -->
+                        <div class="advice-box">
+                            <div class="advice-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="16" x2="12" y2="12"/>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                </svg>
+                            </div>
+                            <div class="advice-text">
+                                <strong>Smart Advisor:</strong>
+                                <span id="smart-advice">Booking now is recommended. Fares surge within 14 days.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State 4: Error State -->
+                <div id="results-error" class="panel-state">
+                    <div class="error-state-content">
+                        <div class="error-icon-container">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <h3>Prediction Failed</h3>
+                        <p id="error-message">Could not connect to backend server. Make sure the Flask API is running.</p>
+                        <button type="button" id="retry-btn" class="retry-btn">Retry Connection</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- Main Workspace: FLIGHT CREATOR TAB -->
+        <main class="dashboard-grid tab-content" id="creator-tab-content" style="display: none;">
+            
+            <!-- Left Side: Flight Creation Form -->
+            <section class="config-panel card">
+                <div class="card-header">
+                    <h2>Register New Flight</h2>
+                    <p>Enter parameters (price will be automatically simulated by the model)</p>
+                </div>
+                
+                <form id="creation-form" onsubmit="return false;">
+                    
+                    <!-- Row 1: Flight Num -->
+                    <div class="form-group">
+                        <label for="create_flight_num">Flight Number</label>
+                        <input type="text" id="create_flight_num" placeholder="e.g. AI-304" required class="custom-input">
+                    </div>
+
+                    <!-- Row 2: Route Selection -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label for="create_source_city">Source City</label>
+                            <div class="select-wrapper">
+                                <select id="create_source_city" required>
+                                    <option value="Delhi" selected>Delhi (DEL)</option>
+                                    <option value="Mumbai">Mumbai (BOM)</option>
+                                    <option value="Bangalore">Bangalore (BLR)</option>
+                                    <option value="Kolkata">Kolkata (CCU)</option>
+                                    <option value="Hyderabad">Hyderabad (HYD)</option>
+                                    <option value="Chennai">Chennai (MAA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="swap-btn-container">
+                            <button type="button" id="create-swap-route-btn" aria-label="Swap source and destination" class="swap-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 4L21 8M21 8L17 12M21 8H3M7 20L3 16M3 16L7 12M3 16H21"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="create_destination_city">Destination City</label>
+                            <div class="select-wrapper">
+                                <select id="create_destination_city" required>
+                                    <option value="Mumbai" selected>Mumbai (BOM)</option>
+                                    <option value="Delhi">Delhi (DEL)</option>
+                                    <option value="Bangalore">Bangalore (BLR)</option>
+                                    <option value="Kolkata">Kolkata (CCU)</option>
+                                    <option value="Hyderabad">Hyderabad (HYD)</option>
+                                    <option value="Chennai">Chennai (MAA)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Airline Select -->
+                    <div class="form-group">
+                        <label>Airline Provider</label>
+                        <div class="airline-grid">
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="Air_India" checked>
+                                <div class="airline-content">
+                                    <div class="airline-logo ai-logo">AI</div>
+                                    <span>Air India</span>
+                                </div>
+                            </label>
+                            
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="Vistara">
+                                <div class="airline-content">
+                                    <div class="airline-logo vi-logo">VI</div>
+                                    <span>Vistara</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="Indigo">
+                                <div class="airline-content">
+                                    <div class="airline-logo in-logo">6E</div>
+                                    <span>IndiGo</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="SpiceJet">
+                                <div class="airline-content">
+                                    <div class="airline-logo sj-logo">SG</div>
+                                    <span>SpiceJet</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="GO_FIRST">
+                                <div class="airline-content">
+                                    <div class="airline-logo go-logo">G8</div>
+                                    <span>Go First</span>
+                                </div>
+                            </label>
+
+                            <label class="airline-card">
+                                <input type="radio" name="create_airline" value="AirAsia">
+                                <div class="airline-content">
+                                    <div class="airline-logo aa-logo">I5</div>
+                                    <span>AirAsia</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Travel Class & Stops -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label>Travel Class</label>
+                            <div class="segmented-control">
+                                <label class="segment-option">
+                                    <input type="radio" name="create_class" value="Economy" checked>
+                                    <span>Economy</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="create_class" value="Business">
+                                    <span>Business</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Flight Stops</label>
+                            <div class="segmented-control">
+                                <label class="segment-option">
+                                    <input type="radio" name="create_stops" value="zero" checked>
+                                    <span>Direct</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="create_stops" value="one">
+                                    <span>1 Stop</span>
+                                </label>
+                                <label class="segment-option">
+                                    <input type="radio" name="create_stops" value="two_or_more">
+                                    <span>2+ Stops</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Departure & Arrival Times -->
+                    <div class="form-row split-row">
+                        <div class="form-group">
+                            <label for="create_departure_time">Departure Period</label>
+                            <div class="select-wrapper">
+                                <select id="create_departure_time" required>
+                                    <option value="Early_Morning">Early Morning (4AM - 8AM)</option>
+                                    <option value="Morning" selected>Morning (8AM - 12PM)</option>
+                                    <option value="Afternoon">Afternoon (12PM - 4PM)</option>
+                                    <option value="Evening">Evening (4PM - 8PM)</option>
+                                    <option value="Night">Night (8PM - 12AM)</option>
+                                    <option value="Late_Night">Late Night (12AM - 4AM)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="create_arrival_time">Arrival Period</label>
+                            <div class="select-wrapper">
+                                <select id="create_arrival_time" required>
+                                    <option value="Early_Morning">Early Morning (4AM - 8AM)</option>
+                                    <option value="Morning">Morning (8AM - 12PM)</option>
+                                    <option value="Afternoon">Afternoon (12PM - 4PM)</option>
+                                    <option value="Evening" selected>Evening (4PM - 8PM)</option>
+                                    <option value="Night">Night (8PM - 12AM)</option>
+                                    <option value="Late_Night">Late Night (12AM - 4AM)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 6: Sliders -->
+                    <div class="form-row split-row">
+                        <div class="form-group slider-group">
+                            <div class="slider-header">
+                                <label for="create_days_left">Days Left to Flight</label>
+                                <span class="slider-val-badge" id="create_days_left_badge">15 Days</span>
+                            </div>
+                            <input type="range" id="create_days_left" name="create_days_left" min="1" max="50" value="15" class="custom-slider">
+                            <div class="slider-labels">
+                                <span>1d (Critical)</span>
+                                <span>50d (Optimal)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group slider-group">
+                            <div class="slider-header">
+                                <label for="create_duration">Flight Duration</label>
+                                <span class="slider-val-badge" id="create_duration_badge">2.5 hours</span>
+                            </div>
+                            <input type="range" id="create_duration" name="create_duration" min="0.5" max="30" step="0.5" value="2.5" class="custom-slider">
+                            <div class="slider-labels">
+                                <span>30m (Short)</span>
+                                <span>30h (Long)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="create-submit-btn" class="submit-btn">
+                        <span>Save & Register Flight</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Side: Created Flights Ledger -->
+            <section class="results-panel card">
+                <div class="card-header">
+                    <h2>Flight Registry Ledger</h2>
+                    <p>Showcase tickets generated in current session</p>
+                </div>
+                
+                <div class="ledger-summary">
+                    <div class="ledger-metric">
+                        <span class="metric-val" id="ledger-count">0</span>
+                        <span class="metric-label">Flights Simulated</span>
+                    </div>
+                    <div class="ledger-indicator">
+                        <span class="pulse-dot"></span>
+                        <span class="indicator-txt">Session Connected</span>
+                    </div>
+                </div>
+
+                <!-- Scrollable Ledger List -->
+                <div class="ledger-list-wrapper">
+                    <div id="ledger-empty" class="ledger-empty-state">
+                        <svg class="ledger-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <line x1="10" y1="9" x2="8" y2="9"/>
+                        </svg>
+                        <p>No flights registered in this session yet.</p>
+                        <p class="ledger-empty-sub">Fill out the creation form to simulate custom tickets.</p>
+                    </div>
+                    
+                    <div id="ledger-list-container" class="ledger-list-container" style="display: none;">
+                        <ul id="ledger-list" class="ledger-list">
+                            <!-- Dynamic flight list item tags -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

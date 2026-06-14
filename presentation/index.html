@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Prediction - Project Presentation</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Style sheet link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Interactive Particle Animation -->
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Presentation Wrapper -->
+    <div id="presentation-container">
+        
+        <!-- Header -->
+        <header id="pres-header">
+            <div class="header-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z" fill="currentColor"/>
+                </svg>
+                <span>AeroPrice ML</span>
+            </div>
+            <div class="header-title">Project Presentation</div>
+            <div class="header-controls">
+                <button id="btn-theme-toggle" title="Toggle Theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+                <button id="btn-fullscreen" title="Toggle Fullscreen">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Progress Indicator -->
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Slides Holder -->
+        <main id="slides-viewport">
+            
+            <!-- SLIDE 1: TITLE -->
+            <section class="slide active" id="slide-title" data-slide="0">
+                <div class="slide-content title-layout">
+                    <div class="title-main-card">
+                        <div class="badge-animated">Flight Price Analytics</div>
+                        <h1 class="glow-text">Flight Price Prediction Engine</h1>
+                        <p class="subtitle">A High-Performance Predictive Modeling & Flask Web Application using Indian Aviation Dataset</p>
+                        
+                        <div class="title-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Model R² Score</span>
+                                <span class="meta-value text-emerald">98.83%</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Dataset Size</span>
+                                <span class="meta-value text-indigo">300,153 Flights</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Frameworks</span>
+                                <span class="meta-value">Scikit-Learn / Flask</span>
+                            </div>
+                        </div>
+
+                        <div class="title-action">
+                            <button class="btn btn-primary" onclick="app.nextSlide()">
+                                Start Presentation
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                            <span class="navigation-tip">Use Left/Right arrow keys or Space to navigate</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: THE DATASET -->
+            <section class="slide" id="slide-dataset" data-slide="1">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">Data Exploration</span>
+                        <h2>Understanding the Flight Dataset</h2>
+                        <p>The core challenge is modeling how various variables affect airline pricing in India. Flight tickets are highly dynamic, changing based on features like airline brand, timing, destination, and purchase urgency.</p>
+                        
+                        <div class="data-insights-list">
+                            <div class="insight-pill">
+                                <span class="pill-icon">✈️</span>
+                                <div>
+                                    <h4>300k+ Records Collected</h4>
+                                    <p>Covers 50 days of flight schedules between top metro hubs in India (Delhi, Mumbai, Kolkata, Chennai, Bangalore, Hyderabad).</p>
+                                </div>
+                            </div>
+                            <div class="insight-pill">
+                                <span class="pill-icon">💰</span>
+                                <div>
+                                    <h4>Drastic Class Disparity</h4>
+                                    <p>Economy tickets range from ₹1,105 to ₹42,320, whereas Business Class spans from ₹12,000 up to ₹114,900, creating a massive predictive shift.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <div class="glass-card stat-dashboard">
+                            <h3>Dataset Composition</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="stat-number glow-emerald">300,153</span>
+                                    <span class="stat-lbl">Total Samples</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number glow-indigo">6</span>
+                                    <span class="stat-lbl">Major Airlines</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number glow-amber">6</span>
+                                    <span class="stat-lbl">Metro Cities</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number glow-rose">2</span>
+                                    <span class="stat-lbl">Travel Classes</span>
+                                </div>
+                            </div>
+                            
+                            <div class="visual-graph-mock">
+                                <div class="graph-header">
+                                    <span>Price Distribution by Class</span>
+                                </div>
+                                <div class="dist-bar-container">
+                                    <div class="dist-bar-label">Economy</div>
+                                    <div class="dist-bar-track">
+                                        <div class="dist-bar-fill fill-economy" style="width: 70%">₹1.1k - ₹42k</div>
+                                    </div>
+                                </div>
+                                <div class="dist-bar-container">
+                                    <div class="dist-bar-label">Business</div>
+                                    <div class="dist-bar-track">
+                                        <div class="dist-bar-fill fill-business" style="width: 100%">₹12k - ₹115k</div>
+                                    </div>
+                                </div>
+                                <span class="graph-footnote">Target variable (Price) was log-transformed (np.log1p) during modeling to stabilize variance.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: FEATURE ENGINEERING -->
+            <section class="slide" id="slide-features" data-slide="2">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">Preprocessing Pipeline</span>
+                        <h2>Feature Engineering & Transformations</h2>
+                        <p>To extract maximal predictive performance from tabular fields, raw values are passed through scaling and custom feature extraction pipelines before feeding the models.</p>
+                        
+                        <div class="feature-steps">
+                            <div class="feature-step-item">
+                                <div class="step-num">01</div>
+                                <div class="step-text">
+                                    <strong>Continuous Feature Scaling</strong>
+                                    <p>Applied <code>StandardScaler</code> to center and scale numeric variables (days left, duration, stops).</p>
+                                </div>
+                            </div>
+                            <div class="feature-step-item">
+                                <div class="step-num">02</div>
+                                <div class="step-text">
+                                    <strong>Categorical Mapping & Encoding</strong>
+                                    <p>Mapped Ordinals (Stops, times of day) directly. One-hot encoded nominals (airlines, source, destination).</p>
+                                </div>
+                            </div>
+                            <div class="feature-step-item">
+                                <div class="step-num">03</div>
+                                <div class="step-text">
+                                    <strong>Urgency Buckets (Booking Window)</strong>
+                                    <p>Engineered <code>booking_window</code>: 0-7 days (extreme urgency), 8-14 days, 15-30 days, 31-60 days, 60+ days.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <div class="glass-card feature-showcase">
+                            <h3>Engineered Signals</h3>
+                            
+                            <div class="tabs-container">
+                                <div class="tabs-header">
+                                    <button class="tab-btn active" onclick="app.switchTab('features', 0)">Raw Inputs</button>
+                                    <button class="tab-btn" onclick="app.switchTab('features', 1)">Engineered Features</button>
+                                    <button class="tab-btn" onclick="app.switchTab('features', 2)">Model Inputs</button>
+                                </div>
+                                <div class="tabs-body">
+                                    <!-- Tab 1: Raw Inputs -->
+                                    <div class="tab-pane active" id="feat-tab-0">
+                                        <div class="code-box">
+                                            <span class="code-comment"># Raw data from flight records</span>
+                                            <p><strong>flight_id:</strong> SG-8114</p>
+                                            <p><strong>airline:</strong> SpiceJet</p>
+                                            <p><strong>class:</strong> Economy</p>
+                                            <p><strong>days_left:</strong> 4</p>
+                                            <p><strong>duration:</strong> 2.17 hrs</p>
+                                            <p><strong>stops:</strong> zero</p>
+                                            <p><strong>departure_time:</strong> Morning</p>
+                                            <p><strong>arrival_time:</strong> Afternoon</p>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 2: Engineered Features -->
+                                    <div class="tab-pane" id="feat-tab-1">
+                                        <div class="code-box">
+                                            <span class="code-comment"># Extracted signals that capture trends</span>
+                                            <p><strong class="text-emerald">class_encoded:</strong> 0 <span class="lbl-sub">(Economy=0, Business=1)</span></p>
+                                            <p><strong class="text-emerald">duration_mins:</strong> 130.2 <span class="lbl-sub">(2.17 * 60)</span></p>
+                                            <p><strong class="text-emerald">is_direct:</strong> 1 <span class="lbl-sub">(stops == 'zero')</span></p>
+                                            <p><strong class="text-emerald">booking_window:</strong> 0 <span class="lbl-sub">(extreme urgency: &le; 7 days)</span></p>
+                                            <p><strong class="text-emerald">time_shift:</strong> 1 <span class="lbl-sub">(arrival_hour - dep_hour)</span></p>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 3: Model Inputs -->
+                                    <div class="tab-pane" id="feat-tab-2">
+                                        <div class="code-box">
+                                            <span class="code-comment"># Final 25 scaled columns fed into pipeline</span>
+                                            <p><strong>scaled_nums:</strong> [days_left, duration_mins, stops_encoded, ...]</p>
+                                            <p><strong>one_hot_cols:</strong> [airline_Vistara, airline_SpiceJet, source_city_Delhi, ...]</p>
+                                            <p><strong>target:</strong> price_log = np.log1p(price)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pipeline-flow">
+                                <div class="flow-step">Raw Data</div>
+                                <div class="flow-arrow">&rarr;</div>
+                                <div class="flow-step highlight">ColumnTransformer</div>
+                                <div class="flow-arrow">&rarr;</div>
+                                <div class="flow-step">ML Model</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: THE SHOWDOWN (EVALUATION) -->
+            <section class="slide" id="slide-evaluation" data-slide="3">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">Performance Showdown</span>
+                        <h2>Model Evaluation & Comparison</h2>
+                        <p>We trained and evaluated seven regression models using Scikit-Learn pipelines. Random Forest emerged as the top performer, capturing the non-linear dynamics of flight pricing with extreme accuracy.</p>
+                        
+                        <div class="metric-selectors">
+                            <button class="btn-metric active" id="btn-metric-r2" onclick="app.updateChartMetric('r2')">R² Score (Explainability)</button>
+                            <button class="btn-metric" id="btn-metric-mae" onclick="app.updateChartMetric('mae')">Mean Absolute Error (MAE)</button>
+                            <button class="btn-metric" id="btn-metric-rmse" onclick="app.updateChartMetric('rmse')">Root Mean Squared Error (RMSE)</button>
+                        </div>
+                        
+                        <p class="chart-annotation text-indigo" id="metric-explanation">
+                            R-squared indicates the percentage of flight price variation explained by the model's features. Higher is better.
+                        </p>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <div class="glass-card chart-container">
+                            <h3 id="chart-title">Algorithm Showdown: R² Score</h3>
+                            
+                            <!-- Dynamic SVG Chart -->
+                            <div class="chart-wrapper">
+                                <svg id="comparison-svg" width="100%" height="300" viewBox="0 0 500 280">
+                                    <!-- Y-Axis Lines -->
+                                    <line x1="160" y1="20" x2="480" y2="20" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                                    <line x1="160" y1="80" x2="480" y2="80" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                                    <line x1="160" y1="140" x2="480" y2="140" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                                    <line x1="160" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                                    <line x1="160" y1="260" x2="480" y2="260" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+                                    
+                                    <!-- Chart Bars will be rendered dynamically by JS -->
+                                    <g id="chart-bars-group"></g>
+                                </svg>
+                            </div>
+                            
+                            <div class="chart-keynote">
+                                <span class="highlight-bullet"></span> Random Forest captures <strong>98.83%</strong> of actual price variations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: THE CHAMPION (RANDOM FOREST) -->
+            <section class="slide" id="slide-champion" data-slide="4">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">The Winner</span>
+                        <h2>The Champion: Random Forest</h2>
+                        <p>With an ensemble of 100 decision trees, the Random Forest Regressor fits multi-dimensional decision boundaries that linear methods miss.</p>
+                        
+                        <div class="champion-metrics">
+                            <div class="champ-metric-card">
+                                <div class="champ-val text-emerald">98.83%</div>
+                                <div class="champ-lbl">R-Squared Score</div>
+                            </div>
+                            <div class="champ-metric-card">
+                                <div class="champ-val text-indigo">₹959</div>
+                                <div class="champ-lbl">Mean Absolute Error</div>
+                            </div>
+                            <div class="champ-metric-card">
+                                <div class="champ-val text-rose">₹2,401</div>
+                                <div class="champ-lbl">Root Mean Sq. Error</div>
+                            </div>
+                        </div>
+
+                        <div class="champion-conclusion">
+                            <p><strong>Interpretation:</strong> On average, predictions are off by only <strong>₹959</strong>, enabling highly reliable ticketing decisions for businesses and consumers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <div class="glass-card importance-card">
+                            <h3>Key Drivers of Flight Pricing</h3>
+                            <p class="section-subtitle">Linear coefficients reveal which factors swing ticket prices the most:</p>
+                            
+                            <div class="importance-list">
+                                <div class="importance-item">
+                                    <span class="feat-name">Travel Class (Business)</span>
+                                    <div class="feat-influence-bar">
+                                        <div class="influence-fill positive" style="width: 93.5%"></div>
+                                    </div>
+                                    <span class="feat-coef text-emerald">+0.935</span>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="feat-name">Vistara Airline</span>
+                                    <div class="feat-influence-bar">
+                                        <div class="influence-fill positive" style="width: 64.6%"></div>
+                                    </div>
+                                    <span class="feat-coef text-emerald">+0.646</span>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="feat-name">Air India Airline</span>
+                                    <div class="feat-influence-bar">
+                                        <div class="influence-fill positive" style="width: 52.5%"></div>
+                                    </div>
+                                    <span class="feat-coef text-emerald">+0.525</span>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="feat-name">SpiceJet Airline</span>
+                                    <div class="feat-influence-bar">
+                                        <div class="influence-fill positive" style="width: 46.8%"></div>
+                                    </div>
+                                    <span class="feat-coef text-emerald">+0.468</span>
+                                </div>
+                                <div class="importance-item">
+                                    <span class="feat-name">Booking Window (Days Left)</span>
+                                    <div class="feat-influence-bar">
+                                        <div class="influence-fill negative" style="width: 18.2%"></div>
+                                    </div>
+                                    <span class="feat-coef text-rose">-0.182</span>
+                                </div>
+                            </div>
+                            <span class="graph-footnote">*Coefficient scale represents change in log price. Positive weights increase price; negative weights discount it.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: ARCHITECTURE -->
+            <section class="slide" id="slide-architecture" data-slide="5">
+                <div class="slide-content architecture-layout">
+                    <span class="slide-tag">System Design</span>
+                    <h2>Production System Architecture</h2>
+                    <p class="section-desc">From raw CSV training data to a fully responsive interactive web application.</p>
+                    
+                    <div class="architecture-diagram">
+                        
+                        <div class="arch-node">
+                            <div class="node-icon">📊</div>
+                            <h4>1. Data Exploration</h4>
+                            <div class="node-badge">Jupyter Notebook</div>
+                            <p>Data cleaning, transformation, scaling, and training 7 regressors.</p>
+                        </div>
+                        
+                        <div class="arch-connector">
+                            <span class="connector-line"></span>
+                            <span class="connector-arrow">&gt;</span>
+                        </div>
+                        
+                        <div class="arch-node highlight">
+                            <div class="node-icon">💾</div>
+                            <h4>2. Serialization</h4>
+                            <div class="node-badge badge-emerald">best_model.joblib</div>
+                            <p>Model pipelines saved to disk (1.04 GB) preserving Scaling parameters.</p>
+                        </div>
+                        
+                        <div class="arch-connector">
+                            <span class="connector-line"></span>
+                            <span class="connector-arrow">&gt;</span>
+                        </div>
+                        
+                        <div class="arch-node">
+                            <div class="node-icon">⚙️</div>
+                            <h4>3. Backend Host</h4>
+                            <div class="node-badge badge-indigo">app.py (Flask)</div>
+                            <p>Loads Random Forest pipeline on start and exposes prediction REST API.</p>
+                        </div>
+                        
+                        <div class="arch-connector">
+                            <span class="connector-line"></span>
+                            <span class="connector-arrow">&gt;</span>
+                        </div>
+                        
+                        <div class="arch-node">
+                            <div class="node-icon">💻</div>
+                            <h4>4. User Interface</h4>
+                            <div class="node-badge">Vanilla HTML / JS</div>
+                            <p>Interactive flight query dashboard with client-side API requests.</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="arch-details-box glass-card">
+                        <h4>Production API Endpoint</h4>
+                        <div class="api-code">
+                            <span class="api-verb">POST</span> <span class="api-url">/predict</span>
+                            <span class="api-desc">Payload: days_left, class, stops, airline, source_city, destination_city, duration</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: PLAYGROUND SIMULATOR (IMPRESSIVE COMPONENT) -->
+            <section class="slide" id="slide-playground" data-slide="6">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">Interactive Simulator</span>
+                        <h2>Live Prediction Simulator</h2>
+                        <p>Adjust the flight parameters below. This interactive widget executes an estimation model reflecting the actual weights of the Random Forest model.</p>
+                        
+                        <!-- SIMULATOR CONTROLS -->
+                        <div class="simulator-controls glass-card">
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="sim-class">Travel Class</label>
+                                    <select id="sim-class" onchange="app.runSimulatorPrediction()">
+                                        <option value="Economy" selected>Economy Class</option>
+                                        <option value="Business">Business Class</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label for="sim-airline">Airline</label>
+                                    <select id="sim-airline" onchange="app.runSimulatorPrediction()">
+                                        <option value="Vistara" selected>Vistara (Premium)</option>
+                                        <option value="Air_India">Air India (Full Service)</option>
+                                        <option value="Indigo">Indigo (LCC)</option>
+                                        <option value="SpiceJet">SpiceJet (LCC)</option>
+                                        <option value="GO_FIRST">GO FIRST (LCC)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="sim-stops">Stops</label>
+                                    <select id="sim-stops" onchange="app.runSimulatorPrediction()">
+                                        <option value="zero" selected>Non-stop (Direct)</option>
+                                        <option value="one">1 Stop</option>
+                                        <option value="two_or_more">2+ Stops</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label for="sim-route">Route (Source &rarr; Dest)</label>
+                                    <select id="sim-route" onchange="app.runSimulatorPrediction()">
+                                        <option value="DEL_BOM" selected>Delhi &rarr; Mumbai</option>
+                                        <option value="DEL_CCU">Delhi &rarr; Kolkata</option>
+                                        <option value="BOM_CCU">Mumbai &rarr; Kolkata</option>
+                                        <option value="BLR_DEL">Bangalore &rarr; Delhi</option>
+                                        <option value="HYD_MAA">Hyderabad &rarr; Chennai</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <div class="slider-lbl-container">
+                                    <label for="sim-days">Booking Urgency (Days Left)</label>
+                                    <span id="sim-days-val" class="slider-bubble">15 days</span>
+                                </div>
+                                <input type="range" id="sim-days" min="1" max="50" value="15" class="sim-slider" oninput="app.runSimulatorPrediction()">
+                                <div class="slider-limits">
+                                    <span>1 Day (Urgent)</span>
+                                    <span>50 Days (Early Bird)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <div class="slider-lbl-container">
+                                    <label for="sim-duration">Flight Duration (Hours)</label>
+                                    <span id="sim-duration-val" class="slider-bubble">2.5 hrs</span>
+                                </div>
+                                <input type="range" id="sim-duration" min="1" max="15" step="0.5" value="2.5" class="sim-slider" oninput="app.runSimulatorPrediction()">
+                                <div class="slider-limits">
+                                    <span>1 hr</span>
+                                    <span>15 hrs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <!-- SIMULATOR DISPLAY -->
+                        <div class="glass-card simulator-display-card">
+                            <h3>Estimated Ticket Price</h3>
+                            
+                            <div class="price-display-wrapper">
+                                <div class="price-currency">₹</div>
+                                <div id="sim-price-out" class="price-amount glow-emerald">5,820</div>
+                            </div>
+                            
+                            <div class="price-breakdown">
+                                <h4>Pricing Factor Breakdown:</h4>
+                                <div class="breakdown-list">
+                                    <div class="breakdown-item">
+                                        <span>Base Fare (Class Rate):</span>
+                                        <span id="breakdown-base" class="text-right">₹3,500</span>
+                                    </div>
+                                    <div class="breakdown-item">
+                                        <span>Airline Modifier:</span>
+                                        <span id="breakdown-airline" class="text-right text-emerald">+₹2,000</span>
+                                    </div>
+                                    <div class="breakdown-item">
+                                        <span>Days Left Factor (Urgency):</span>
+                                        <span id="breakdown-days" class="text-right text-rose">+₹420</span>
+                                    </div>
+                                    <div class="breakdown-item">
+                                        <span>Flight Stops / Layout:</span>
+                                        <span id="breakdown-stops" class="text-right">₹0</span>
+                                    </div>
+                                    <div class="breakdown-item">
+                                        <span>Duration Surcharge:</span>
+                                        <span id="breakdown-duration" class="text-right text-emerald">+₹500</span>
+                                    </div>
+                                    <div class="breakdown-divider"></div>
+                                    <div class="breakdown-item font-bold">
+                                        <span>Estimated Total:</span>
+                                        <span id="breakdown-total" class="text-right font-bold">₹6,420</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="simulator-comparison">
+                                <div class="badge-tag">Model Logic</div>
+                                <p>This calculation approximates the decision boundary modeled by our Random Forest. It shifts by ₹32k+ instantly when Class is toggled, showing how dominant <code>class_encoded</code> is.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: SUMMARY & NEXT STEPS -->
+            <section class="slide" id="slide-conclusion" data-slide="7">
+                <div class="slide-content grid-2-col">
+                    <div class="slide-text">
+                        <span class="slide-tag">Project Synthesis</span>
+                        <h2>Conclusions & Future Scope</h2>
+                        <p>The Flight Price Prediction project effectively bridges academic data science and practical software engineering. By standardizing training pipelines, we ensure models operate with high consistency in production.</p>
+                        
+                        <div class="future-cards">
+                            <div class="future-card-item">
+                                <div class="future-card-icon">⚡</div>
+                                <div>
+                                    <h4>Real-Time Pricing Feed</h4>
+                                    <p>Connect backend to live airline aggregator APIs to compare model predictions against real-time ticker prices.</p>
+                                </div>
+                            </div>
+                            <div class="future-card-item">
+                                <div class="future-card-icon">📈</div>
+                                <div>
+                                    <h4>Advanced Architectures</h4>
+                                    <p>Test deep learning neural nets and Optuna hyperparameter sweeps to push R² beyond 99.0%.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-visual">
+                        <div class="glass-card recap-card">
+                            <h3>Key Achievements</h3>
+                            
+                            <ul class="achievement-checklist">
+                                <li>
+                                    <span class="check-box checked">&check;</span>
+                                    <div>
+                                        <strong>Pipeline Robustness:</strong>
+                                        <p>Encapsulated scaling and encoding into Scikit-Learn Pipeline object preventing leakage.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="check-box checked">&check;</span>
+                                    <div>
+                                        <strong>98.8% Variance Explained:</strong>
+                                        <p>Random Forest outperforms Linear, Polynomial, AdaBoost, and XGBoost models.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="check-box checked">&check;</span>
+                                    <div>
+                                        <strong>Seamless API Deployment:</strong>
+                                        <p>Lightweight Flask app hosts the 1.04 GB joblib pipeline for sub-second REST API response times.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="final-thank-you">
+                                <h4>Thank you!</h4>
+                                <p>Feel free to query the models or test the live website.</p>
+                                <button class="btn btn-secondary" onclick="app.jumpToSlide(0)">
+                                    Restart Presentation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Slide Controls Footer -->
+        <footer id="pres-footer">
+            <div class="footer-left">
+                <button class="control-btn" id="btn-prev" onclick="app.prevSlide()" title="Previous Slide (Left Arrow)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="control-btn" id="btn-next" onclick="app.nextSlide()" title="Next Slide (Right Arrow/Space)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <div class="slide-counter">
+                    <span id="current-slide-num">1</span> / <span id="total-slide-num">8</span>
+                </div>
+            </div>
+            
+            <div class="footer-center">
+                <!-- Nav Dots -->
+                <div id="nav-dots">
+                    <!-- Added by JS -->
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <button id="btn-autoplay" class="control-btn-secondary" title="Play/Pause Slide Autoplay">
+                    <svg class="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <svg class="pause-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                    <span class="autoplay-txt">Play</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script link -->
+    <script src="app.js"></script>
+</body>
+</html>
